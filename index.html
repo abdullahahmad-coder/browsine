@@ -1,475 +1,363 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Power Fitness Gym</title>
+<title>IRON PULSE | Fitness Gym</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dark:#111214;
+    --bg-darker:#0a0a0b;
+    --bg-card:#1b1c1f;
+    --accent:#E8432C;
+    --accent-dim:#ff6a4d;
+    --steel:#9aa1a9;
+    --text-light:#f5f5f4;
+    --text-muted:#b6b8bc;
+    --border:#2b2c30;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-dark);
+    color:var(--text-light);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;height:auto;display:block;}
+  h1,h2,h3,.logo{font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
+  .container{width:100%;max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* NAVBAR */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,11,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto;}
+  .logo{font-size:28px;color:var(--text-light);}
+  .logo span{color:var(--accent);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{color:var(--text-light);text-decoration:none;font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;transition:color .2s;}
+  .nav-links a:hover{color:var(--accent);}
+  .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+  .menu-toggle span{width:26px;height:3px;background:var(--text-light);border-radius:2px;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:80px;
+    background:linear-gradient(180deg, rgba(10,10,11,.55), rgba(10,10,11,.9) 85%),
+      url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  }
+  .hero-content{max-width:640px;}
+  .eyebrow{color:var(--accent);font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:14px;}
+  .hero h1{font-size:clamp(48px,8vw,88px);line-height:0.95;margin:14px 0 20px;}
+  .hero p{color:var(--text-muted);font-size:18px;max-width:520px;margin-bottom:30px;}
+  .btn{
+    display:inline-block;padding:16px 34px;background:var(--accent);color:#fff;
+    text-decoration:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+    border-radius:2px;transition:background .2s, transform .2s;border:none;cursor:pointer;font-size:15px;
+  }
+  .btn:hover{background:var(--accent-dim);transform:translateY(-2px);}
+  .btn-outline{background:transparent;border:2px solid var(--text-light);margin-left:14px;}
+  .btn-outline:hover{background:var(--text-light);color:var(--bg-dark);}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:0;}
+
+  /* SECTION GENERIC */
+  section{padding:100px 0;}
+  .section-tag{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:3px;font-size:13px;margin-bottom:10px;}
+  .section-title{font-size:clamp(34px,5vw,54px);margin-bottom:18px;}
+  .section-desc{color:var(--text-muted);max-width:620px;margin-bottom:50px;font-size:16px;}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .about-img img{border-radius:6px;object-fit:cover;width:100%;height:420px;}
+  .stat-row{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap;}
+  .stat-num{font-family:'Bebas Neue';font-size:44px;color:var(--accent);}
+  .stat-label{color:var(--text-muted);font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+
+  /* PROGRAMS */
+  .bg-darker{background:var(--bg-darker);}
+  .programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .program-card{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;
+    transition:transform .25s, border-color .25s;
+  }
+  .program-card:hover{transform:translateY(-6px);border-color:var(--accent);}
+  .program-card img{width:100%;height:220px;object-fit:cover;}
+  .program-body{padding:24px;}
+  .program-body h3{font-size:26px;margin-bottom:8px;}
+  .program-body p{color:var(--text-muted);font-size:14px;}
+
+  /* TRAINERS */
+  .trainers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .trainer-card{text-align:center;}
+  .trainer-card img{
+    width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;margin-bottom:16px;
+    filter:grayscale(30%);transition:filter .3s;
+  }
+  .trainer-card:hover img{filter:grayscale(0%);}
+  .trainer-card h3{font-size:22px;}
+  .trainer-card span{color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+
+  /* PRICING TABLE */
+  .table-wrap{display:flex;justify-content:center;overflow-x:auto;}
+  table{
+    border-collapse:collapse;width:100%;max-width:900px;margin:0 auto;
+    background:var(--bg-card);border-radius:8px;overflow:hidden;
+  }
+  thead tr{background:var(--accent);}
+  th{padding:18px 20px;text-align:center;font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:#fff;}
+  td{padding:16px 20px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:rgba(232,67,44,0.07);}
+  td strong{color:var(--text-light);}
+
+  /* CONTACT / FOOTER */
+  footer{background:var(--bg-darker);border-top:1px solid var(--border);padding:60px 0 24px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+  footer h3{font-size:22px;margin-bottom:16px;}
+  footer p, footer a{color:var(--text-muted);font-size:14px;text-decoration:none;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:10px;}
+  .footer-bottom{text-align:center;color:var(--text-muted);font-size:13px;padding-top:24px;border-top:1px solid var(--border);}
+
+  /* RESPONSIVE */
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;}
+    .programs-grid{grid-template-columns:repeat(2,1fr);}
+    .trainers-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .nav-links{
+      position:fixed;top:64px;right:0;left:0;background:var(--bg-darker);
+      flex-direction:column;padding:24px;gap:20px;
+      transform:translateY(-150%);opacity:0;transition:all .3s;border-bottom:1px solid var(--border);
+    }
+    .nav-links.open{transform:translateY(0);opacity:1;}
+    .menu-toggle{display:flex;}
+    .programs-grid{grid-template-columns:1fr;}
+    .trainers-grid{grid-template-columns:1fr 1fr;}
+    .hero-cta{flex-direction:column;gap:14px;}
+    .btn-outline{margin-left:0;}
+    section{padding:70px 0;}
+    th,td{padding:12px 8px;font-size:14px;}
+  }
+</style>
 </head>
+<body>
 
-<body bgcolor="#f2f2f2">
+<header>
+  <nav>
+    <div class="logo">IRON<span>PULSE</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
 
-<center>
-
-<h1>🏋️ POWER FITNESS GYM 🏋️</h1>
-
-<p>
-<b>Your Body Can Stand Almost Anything.<br>
-It's Your Mind That You Have To Convince.</b>
-</p>
-
-<hr width="90%">
-
-<h2>Navigation</h2>
-
-<a href="#home">Home</a> |
-<a href="#about">About</a> |
-<a href="#services">Services</a> |
-<a href="#trainers">Trainers</a> |
-<a href="#gallery">Gallery</a> |
-<a href="#membership">Membership</a> |
-<a href="#contact">Contact</a>
-
-<hr width="90%">
-
-</center>
-
-<!-- HOME -->
-
-<h2 id="home">🏠 Home</h2>
-
-<img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900"
-width="900" height="500">
-
-<p>
-
-Welcome to <b>Power Fitness Gym</b>. Our mission is to help people
-build strength, improve health, and stay fit.
-We provide modern equipment, experienced trainers,
-healthy diet guidance, and a friendly environment for everyone.
-
-</p>
-
-<hr>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="eyebrow">Rawalpindi's Strength Lab</div>
+      <h1>BUILD YOUR<br>STRONGEST SELF</h1>
+      <p>Iron Pulse ek <strong>professional fitness gym</strong> hai jahan <strong>expert trainers</strong>, <strong>modern equipment</strong> aur ek motivating community aap ke fitness goals ko reality bana deti hai.</p>
+      <div class="hero-cta">
+        <a href="#pricing" class="btn">Join Now</a>
+        <a href="#programs" class="btn btn-outline">Our Programs</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ABOUT -->
+<section id="about">
+  <div class="container about-grid">
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80" alt="Gym interior">
+    </div>
+    <div>
+      <div class="section-tag">Who We Are</div>
+      <h2 class="section-title">More Than a Gym</h2>
+      <p class="section-desc">2015 se, Iron Pulse ne apni community ko <strong>state-of-the-art equipment</strong>, <strong>certified coaches</strong> aur ek disciplined environment diya hai. Yahan har member ka goal — chahe <strong>weight loss</strong> ho ya <strong>strength building</strong> — humari top priority hai.</p>
+      <div class="stat-row">
+        <div>
+          <div class="stat-num">9+</div>
+          <div class="stat-label">Years Running</div>
+        </div>
+        <div>
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Expert Trainers</div>
+        </div>
+        <div>
+          <div class="stat-num">3200+</div>
+          <div class="stat-label">Active Members</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2 id="about">About Us</h2>
-
-<img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800"
-width="600">
-
-<p>
-
-Power Fitness Gym was established to provide world-class fitness
-facilities. We focus on strength training, bodybuilding,
-cardio exercises, weight loss programs, and personal fitness.
-
-</p>
-
-<h3>Why Choose Us?</h3>
-
-<ul>
-
-<li>Modern Gym Equipment</li>
-
-<li>Professional Trainers</li>
-
-<li>Affordable Membership</li>
-
-<li>Diet Plans</li>
-
-<li>Separate Cardio Area</li>
-
-<li>Friendly Environment</li>
-
-</ul>
-
-<hr>
-
-<!-- SERVICES -->
-
-<h2 id="services">Our Services</h2>
-
-<table border="1" cellpadding="10">
-
-<tr>
-
-<th>Service</th>
-
-<th>Description</th>
-
-</tr>
-
-<tr>
-
-<td>Weight Training</td>
-
-<td>Build strength and muscle.</td>
-
-</tr>
-
-<tr>
-
-<td>Cardio</td>
-
-<td>Improve heart health and stamina.</td>
-
-</tr>
-
-<tr>
-
-<td>Yoga</td>
-
-<td>Increase flexibility and relaxation.</td>
-
-</tr>
-
-<tr>
-
-<td>CrossFit</td>
-
-<td>High intensity workouts.</td>
-
-</tr>
-
-<tr>
-
-<td>Personal Training</td>
-
-<td>One-on-one coaching sessions.</td>
-
-</tr>
-
-<tr>
-
-<td>Nutrition Plan</td>
-
-<td>Customized diet plans.</td>
-
-</tr>
-
-</table>
-
-<hr>
+<!-- PROGRAMS -->
+<section id="programs" class="bg-darker">
+  <div class="container">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Our Training Programs</h2>
+    <p class="section-desc">Har program ko specifically design kiya gaya hai taky aap apne <strong>fitness goals</strong> tak fast aur safe tareeqay se pohnch sakein.</p>
+    <div class="programs-grid">
+      <div class="program-card">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=700&q=80" alt="Strength training">
+        <div class="program-body">
+          <h3>Strength Training</h3>
+          <p>Heavy lifting programs jo <strong>muscle mass</strong> aur overall power barhatay hain, expert supervision ke sath.</p>
+        </div>
+      </div>
+      <div class="program-card">
+        <img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=700&q=80" alt="Cardio training">
+        <div class="program-body">
+          <h3>Cardio & Fat Burn</h3>
+          <p>High-intensity sessions jo <strong>stamina</strong> improve kartay hain aur calories fast burn kartay hain.</p>
+        </div>
+      </div>
+      <div class="program-card">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=80" alt="Yoga and flexibility">
+        <div class="program-body">
+          <h3>Yoga & Flexibility</h3>
+          <p>Recovery, <strong>flexibility</strong> aur mental clarity ke liye guided yoga sessions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- TRAINERS -->
-
-<h2 id="trainers">Our Trainers</h2>
-
-<table border="1" cellpadding="15">
-
-<tr>
-
-<th>Photo</th>
-
-<th>Name</th>
-
-<th>Specialization</th>
-
-</tr>
-
-<tr>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=250"
-width="180">
-
-</td>
-
-<td>John Smith</td>
-
-<td>Bodybuilding Coach</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1549476464-37392f717541?w=250"
-width="180">
-
-</td>
-
-<td>Sarah Johnson</td>
-
-<td>Fitness Trainer</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=250"
-width="180">
-
-</td>
-
-<td>Michael Lee</td>
-
-<td>Strength Coach</td>
-
-</tr>
-
-</table>
-
-<hr>
-
-<!-- GALLERY -->
-
-<h2 id="gallery">Gym Gallery</h2>
-
-<table>
-
-<tr>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=300"
-width="300">
-
-</td>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=300"
-width="300">
-
-</td>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=300"
-width="300">
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=300"
-width="300">
-
-</td>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=300"
-width="300">
-
-</td>
-
-<td>
-
-<img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=300"
-width="300">
-
-</td>
-
-</tr>
-
-</table>
-
-<hr>
-
-<!-- MEMBERSHIP -->
-
-<h2 id="membership">Membership Plans</h2>
-
-<table border="1" cellpadding="10">
-
-<tr>
-
-<th>Plan</th>
-
-<th>Duration</th>
-
-<th>Fee</th>
-
-</tr>
-
-<tr>
-
-<td>Basic</td>
-
-<td>1 Month</td>
-
-<td>$20</td>
-
-</tr>
-
-<tr>
-
-<td>Standard</td>
-
-<td>3 Months</td>
-
-<td>$55</td>
-
-</tr>
-
-<tr>
-
-<td>Premium</td>
-
-<td>6 Months</td>
-
-<td>$100</td>
-
-</tr>
-
-<tr>
-
-<td>VIP</td>
-
-<td>12 Months</td>
-
-<td>$180</td>
-
-</tr>
-
-</table>
-
-<hr>
-
-<!-- FORM -->
-
-<h2>Join Now</h2>
-
-<form>
-
-Name:<br>
-
-<input type="text">
-
-<br><br>
-
-Email:<br>
-
-<input type="email">
-
-<br><br>
-
-Phone:<br>
-
-<input type="number">
-
-<br><br>
-
-Gender:<br>
-
-<input type="radio" name="g">Male
-
-<input type="radio" name="g">Female
-
-<br><br>
-
-Choose Plan:
-
-<select>
-
-<option>Basic</option>
-
-<option>Standard</option>
-
-<option>Premium</option>
-
-<option>VIP</option>
-
-</select>
-
-<br><br>
-
-Health Goal:<br>
-
-<textarea rows="5" cols="40"></textarea>
-
-<br><br>
-
-<input type="submit" value="Register">
-
-<input type="reset">
-
-</form>
-
-<hr>
-
-<!-- CONTACT -->
-
-<h2 id="contact">Contact Us</h2>
-
-<p>
-
-<b>Power Fitness Gym</b><br>
-
-📍 Islamabad, Pakistan<br>
-
-📞 +92 300 1234567<br>
-
-📧 info@powerfitnessgym.com
-
-</p>
-
-<hr>
-
-<center>
-
-<h3>Opening Hours</h3>
-
-<table border="1" cellpadding="8">
-
-<tr>
-
-<th>Day</th>
-
-<th>Timing</th>
-
-</tr>
-
-<tr>
-
-<td>Monday - Friday</td>
-
-<td>6:00 AM - 11:00 PM</td>
-
-</tr>
-
-<tr>
-
-<td>Saturday</td>
-
-<td>7:00 AM - 10:00 PM</td>
-
-</tr>
-
-<tr>
-
-<td>Sunday</td>
-
-<td>8:00 AM - 8:00 PM</td>
-
-</tr>
-
-</table>
-
-<br>
-
-<hr>
-
-<p>
-
-<b>© 2026 Power Fitness Gym</b><br>
-
-All Rights Reserved.
-
-</p>
-
-</center>
+<section id="trainers">
+  <div class="container">
+    <div class="section-tag">Meet The Team</div>
+    <h2 class="section-title">Certified Trainers</h2>
+    <p class="section-desc">Humari team mein <strong>certified professionals</strong> shamil hain jo aap ko har step par guide kartay hain.</p>
+    <div class="trainers-grid">
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=500&q=80" alt="Trainer Ahmed">
+        <h3>Ahmed Raza</h3>
+        <span>Strength Coach</span>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=500&q=80" alt="Trainer Sara">
+        <h3>Sara Khan</h3>
+        <span>Cardio Specialist</span>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=500&q=80" alt="Trainer Bilal">
+        <h3>Bilal Ahmed</h3>
+        <span>CrossFit Trainer</span>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1554344728-77cf90d9ed26?auto=format&fit=crop&w=500&q=80" alt="Trainer Ayesha">
+        <h3>Ayesha Malik</h3>
+        <span>Yoga Instructor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="bg-darker">
+  <div class="container">
+    <div class="section-tag">Membership</div>
+    <h2 class="section-title">Simple, Fair Pricing</h2>
+    <p class="section-desc">Apni zaroorat ke mutabiq plan choose karein — koi hidden charges nahi.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Monthly Fee</th>
+            <th>Access</th>
+            <th>Personal Training</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Basic</strong></td>
+            <td>PKR 3,500</td>
+            <td>Gym Floor Only</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>PKR 6,000</td>
+            <td>Gym + Cardio + Yoga</td>
+            <td>2 Sessions / Month</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td>PKR 9,500</td>
+            <td>Full Access + Nutrition Plan</td>
+            <td>Unlimited</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="container footer-grid">
+    <div>
+      <h3>IRON<span style="color:var(--accent);">PULSE</span></h3>
+      <p>Rawalpindi ka premier fitness destination. Aayein aur apna transformation shuru karein.</p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <ul>
+        <li>Rawalpindi, Punjab, Pakistan</li>
+        <li>+92 300 1234567</li>
+        <li>info@ironpulse.gym</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    &copy; 2026 Iron Pulse Gym. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
 
 </body>
 </html>
